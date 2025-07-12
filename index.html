@@ -126,7 +126,7 @@
     .about-me {
         max-width: 750px;
         margin: 2rem auto 5rem;
-        padding: 2rem;
+        padding: 2.5rem;
         text-align: center;
         background: var(--surface);
         backdrop-filter: blur(var(--surface-blur));
@@ -135,7 +135,8 @@
         border: 1px solid var(--border-color);
     }
     .about-me p {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+        line-height: 1.8;
         color: var(--muted);
     }
 
@@ -267,37 +268,9 @@
     </lottie-player>
     <section class="about-me reveal">
         <p data-key="aboutMeText">
-            I am a passionate AI Specialist and Python developer with over six years of experience crafting machine learning solutions that tackle fraud, optimize operations, and drive industrial automation. My journey is about transforming complex data into impactful, real-world solutions.
+            My passion lies at the intersection of AI and engineering, where complex challenges become opportunities for innovation. For over six years, I've focused on building robust AI solutions—from intelligent systems that prevent fraud and automate industrial recycling, to data architectures that deliver real-time insights on the cloud. This space is a glimpse into that journey.
         </p>
     </section>
-
-    <!-- <h2 class="section-title reveal" data-key="expertiseTitle">My Expertise</h2>
-    <section class="component-grid">
-      <div class="component reveal">
-        <h3 data-key="compML">Machine Learning & AI</h3>
-        <ul>
-          <li data-key="compML1">Fraud prevention models</li>
-          <li data-key="compML2">Computer vision pipelines</li>
-          <li data-key="compML3">NLP & Graph-based analytics</li>
-        </ul>
-      </div>
-      <div class="component reveal">
-        <h3 data-key="compArch">Data & Software Architecture</h3>
-        <ul>
-          <li data-key="compArch1">Cloud-native micro-services (GCP)</li>
-          <li data-key="compArch2">Scalable ETL/ELT pipelines</li>
-          <li data-key="compArch3">API design & automation</li>
-        </ul>
-      </div>
-      <div class="component reveal">
-        <h3 data-key="compSolutions">Applied Industry Solutions</h3>
-        <ul>
-          <li data-key="compSolutions1">Industrial process optimisation</li>
-          <li data-key="compSolutions2">Automated recycling systems</li>
-          <li data-key="compSolutions3">Environmental data modeling</li>
-        </ul>
-      </div>
-    </section> -->
 
     <section class="timeline reveal">
       <h2 class="section-title" data-key="journeyTitle" style="margin-top: 6rem;">My Journey</h2>
@@ -351,7 +324,7 @@
   const translations = {
     en: {
       name: 'Andrés Felipe Rosero', title: 'AI Specialist • Data Scientist • Environmental Engineer',
-      aboutMeText: 'I am a passionate AI Specialist and Python developer with over six years of experience crafting machine learning solutions that tackle fraud, optimize operations, and drive industrial automation. My journey is about transforming complex data into impactful, real-world solutions.',
+      aboutMeText: "My passion lies at the intersection of AI and engineering, where complex challenges become opportunities for innovation. For over six years, I've focused on building robust AI solutions—from intelligent systems that prevent fraud and automate industrial recycling, to data architectures that deliver real-time insights on the cloud. This space is a glimpse into that journey.",
       expertiseTitle: 'My Expertise',
       compML: 'Machine Learning & AI', compML1: 'Fraud prevention models', compML2: 'Computer vision pipelines', compML3: 'NLP & Graph-based analytics',
       compArch: 'Data & Software Architecture', compArch1: 'Cloud-native micro-services (GCP)', compArch2: 'Scalable ETL/ELT pipelines', compArch3: 'API design & automation',
@@ -362,7 +335,7 @@
     },
     fr: {
       name: 'Andrés Felipe Rosero', title: 'Spécialiste IA • Data Scientist • Ingénieur Environnement',
-      aboutMeText: "Je suis un spécialiste IA et développeur Python passionné avec plus de six ans d'expérience dans la création de solutions de machine learning qui luttent contre la fraude, optimisent les opérations et automatisent les processus industriels. Mon parcours consiste à transformer des données complexes en solutions percutantes et concrètes.",
+      aboutMeText: "Ma passion se situe à l'intersection de l'IA et de l'ingénierie, où les défis complexes deviennent des opportunités d'innovation. Depuis plus de six ans, je me concentre sur la création de solutions d'IA robustes—des systèmes intelligents qui préviennent la fraude et automatisent le recyclage industriel, aux architectures de données qui fournissent des informations en temps réel sur le cloud. Cet espace est un aperçu de ce parcours.",
       expertiseTitle: 'Mon Expertise',
       compML: 'Apprentissage Machine & IA', compML1: 'Modèles de prévention de la fraude', compML2: 'Pipelines de vision par ordinateur', compML3: 'NLP & analyses basées sur les graphes',
       compArch: 'Architecture Données & Logiciels', compArch1: 'Micro-services cloud-natifs (GCP)', compArch2: 'Pipelines ETL/ELT évolutifs', compArch3: "Conception d'API & automatisation",
@@ -373,7 +346,7 @@
     },
     es: {
       name:'Andrés Felipe Rosero', title:'Especialista en IA • Científico de Datos • Ingeniero Ambiental',
-      aboutMeText:'Soy un apasionado especialista en IA y desarrollador Python con más de seis años de experiencia creando soluciones de machine learning que combaten el fraude, optimizan operaciones e impulsan la automatización industrial. Mi trayectoria se trata de transformar datos complejos en soluciones impactantes del mundo real.',
+      aboutMeText:'Mi pasión reside en la intersección de la IA y la ingeniería, donde los desafíos complejos se convierten en oportunidades para la innovación. Durante más de seis años, me he centrado en construir soluciones de IA robustas, desde sistemas inteligentes que previenen el fraude y automatizan el reciclaje industrial, hasta arquitecturas de datos que ofrecen información en tiempo real en la nube. Este espacio es un vistazo a esa trayectoria.',
       expertiseTitle:'Mi Pericia',
       compML: 'Aprendizaje Automático e IA', compML1: 'Modelos de prevención de fraude', compML2: 'Pipelines de visión por computador', compML3: 'NLP y análisis basados en grafos',
       compArch: 'Arquitectura de Datos y Software', compArch1: 'Microservicios nativos en la nube (GCP)', compArch2: 'Pipelines ETL/ELT escalables', compArch3: 'Diseño de API y automatización',
@@ -434,23 +407,18 @@
     }, { threshold: 0.1 });
     revealEls.forEach(el => io.observe(el));
 
-    /* ===== Lottie Animation Logic (New and Improved) ===== */
+    /* ===== Lottie Animation Logic ===== */
     const lottiePlayer = document.getElementById('lottie-intro');
-    const subtitle = document.getElementById('subtitle');
 
-    // Manually fetch the Lottie JSON data
     fetch('assets/hello.json')
       .then(response => response.json())
       .then(data => {
-        // Load the animation data into the player and play it
         lottiePlayer.load(data);
         lottiePlayer.play();
       })
       .catch(error => {
         console.error('Error loading Lottie animation:', error);
-        // If loading fails, just show the subtitle immediately
         lottiePlayer.classList.add('hidden');
-        subtitle.classList.remove('hidden');
       });
   });
 </script>
