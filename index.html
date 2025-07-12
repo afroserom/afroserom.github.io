@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Andrés Rosero – AI System Architecture</title>
+  
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
   <style>
     /* ============================
        Design Tokens (Light & Dark)
        ============================ */
     :root {
       --bg: #f8f9fa;
-      --surface: rgba(255, 255, 255, 0.7);
+      --surface: rgba(255, 255, 255, 0.1);
       --surface-blur: 12px;
       --text: #212529;
       --muted: #6c757d;
@@ -22,7 +25,7 @@
     }
     [data-theme="dark"] {
       --bg: #0e1116;
-      --surface: rgba(30, 33, 39, 0.6);
+      --surface: rgba(30, 33, 39, 0.1);
       --text: #f1f3f7;
       --muted: #a1a1aa;
       --accent: #5ac8ff;
@@ -73,10 +76,15 @@
       letter-spacing: -1px;
     }
     header p { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: auto; }
+    
+    /* Utility class to hide elements */
+    .hidden {
+        display: none;
+    }
 
     /* Controls */
     .controls {
-      margin-top: 2rem;
+      margin-top: 4rem;
       display: inline-flex;
       gap: 0.75rem;
       backdrop-filter: blur(var(--surface-blur));
@@ -104,6 +112,14 @@
         font-weight: 700;
         margin-bottom: 3rem;
         color: var(--text);
+    }
+
+    /* ====== Header Lottie Animation ====== */
+    lottie-player {
+        display: block;
+        height: 13rem; 
+        margin-bottom: -5rem; 
+        margin-top: -6rem;
     }
 
     /* === About Me Section === */
@@ -230,7 +246,8 @@
 
   <header>
     <h1 data-key="name">Andrés Felipe Rosero</h1>
-    <p data-key="title">AI Specialist • Data Scientist • Environmental Engineer</p>
+
+    <p id="subtitle" data-key="title">AI Specialist • Data Scientist • Environmental Engineer</p>
 
     <div class="controls">
       <select id="langSelect" aria-label="Select language">
@@ -243,13 +260,18 @@
   </header>
 
   <main>
+    <lottie-player
+        id="lottie-intro"
+        background="transparent"
+        speed="1">
+    </lottie-player>
     <section class="about-me reveal">
         <p data-key="aboutMeText">
             I am a passionate AI Specialist and Python developer with over six years of experience crafting machine learning solutions that tackle fraud, optimize operations, and drive industrial automation. My journey is about transforming complex data into impactful, real-world solutions.
         </p>
     </section>
 
-    <h2 class="section-title reveal" data-key="expertiseTitle">My Expertise</h2>
+    <!-- <h2 class="section-title reveal" data-key="expertiseTitle">My Expertise</h2>
     <section class="component-grid">
       <div class="component reveal">
         <h3 data-key="compML">Machine Learning & AI</h3>
@@ -275,7 +297,7 @@
           <li data-key="compSolutions3">Environmental data modeling</li>
         </ul>
       </div>
-    </section>
+    </section> -->
 
     <section class="timeline reveal">
       <h2 class="section-title" data-key="journeyTitle" style="margin-top: 6rem;">My Journey</h2>
@@ -312,17 +334,13 @@
 
 <script>
   // Immediately invoked function to set theme and language from localStorage
-  // to avoid page flash
   (function() {
     // --- THEME ---
-    // 1. Check localStorage
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.documentElement.setAttribute('data-theme', savedTheme);
     } else {
-      // 2. Check OS preference if no theme is saved
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      // Default to dark unless OS preference is light
       document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
     }
   })();
@@ -366,48 +384,75 @@
     }
   };
 
-  const langSelect = document.getElementById('langSelect');
-  const themeToggle = document.getElementById('themeToggle');
+  // Wait for the DOM to be fully loaded before running scripts
+  document.addEventListener('DOMContentLoaded', () => {
+    const langSelect = document.getElementById('langSelect');
+    const themeToggle = document.getElementById('themeToggle');
 
-  function setLang(lang){
-    document.documentElement.lang = lang;
-    langSelect.value = lang; // Sync dropdown with current language
-    const dict = translations[lang] || translations.en;
-    document.querySelectorAll('[data-key]').forEach(el => {
-      const key = el.getAttribute('data-key');
-      if(dict[key]) el.textContent = dict[key];
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      langSelect.value = lang; 
+      const dict = translations[lang] || translations.en;
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if(dict[key]) {
+            if (el.id === 'subtitle' && el.classList.contains('hidden')) {
+                el.textContent = dict[key];
+            } else if (el.id !== 'subtitle') {
+                el.textContent = dict[key];
+            } else {
+                 el.textContent = dict[key];
+            }
+        }
+      });
+    }
+    
+    const savedLang = localStorage.getItem('language') || 'en';
+    setLang(savedLang);
+
+    langSelect.addEventListener('change', e => {
+      const newLang = e.target.value;
+      setLang(newLang);
+      localStorage.setItem('language', newLang); 
     });
-  }
-  
-  // Set language from localStorage or default
-  const savedLang = localStorage.getItem('language') || 'en';
-  setLang(savedLang);
 
-  langSelect.addEventListener('change', e => {
-    const newLang = e.target.value;
-    setLang(newLang);
-    localStorage.setItem('language', newLang); // Save language choice
-  });
-
-  /* ===== Theme Toggle ===== */
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme); // Save theme choice
-  });
-
-  /* ===== Scroll Reveal ===== */
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
     });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => io.observe(el));
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => io.observe(el));
+
+    /* ===== Lottie Animation Logic (New and Improved) ===== */
+    const lottiePlayer = document.getElementById('lottie-intro');
+    const subtitle = document.getElementById('subtitle');
+
+    // Manually fetch the Lottie JSON data
+    fetch('assets/hello.json')
+      .then(response => response.json())
+      .then(data => {
+        // Load the animation data into the player and play it
+        lottiePlayer.load(data);
+        lottiePlayer.play();
+      })
+      .catch(error => {
+        console.error('Error loading Lottie animation:', error);
+        // If loading fails, just show the subtitle immediately
+        lottiePlayer.classList.add('hidden');
+        subtitle.classList.remove('hidden');
+      });
+  });
 </script>
 </body>
 </html>
