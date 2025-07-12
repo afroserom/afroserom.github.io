@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrés Rosero – AI System Architecture</title>
+  <style>
+    /* ============================
+       Design Tokens (Light & Dark)
+       ============================ */
+    :root {
+      --bg: #f8f9fa;
+      --surface: rgba(255, 255, 255, 0.7);
+      --surface-blur: 12px;
+      --text: #212529;
+      --muted: #6c757d;
+      --accent: #007bff;
+      --accent-2: #66b0ff;
+      --radius: 20px;
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      --border-color: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="dark"] {
+      --bg: #0e1116;
+      --surface: rgba(30, 33, 39, 0.6);
+      --text: #f1f3f7;
+      --muted: #a1a1aa;
+      --accent: #5ac8ff;
+      --accent-2: #1e90ff;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ========= Global ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    /* ==== Abstract blobs for depth ==== */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.5;
+      z-index: -1;
+      animation: blobMove 50s ease-in-out infinite alternate;
+    }
+    .blob.one { width: 40vw; height: 40vw; background: var(--accent); top: -15%; left: -15%; }
+    .blob.two { width: 30vw; height: 30vw; background: var(--accent-2); bottom: -20%; right: -15%; animation-delay: 5s; }
+    @keyframes blobMove {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30%, -20%) scale(1.3); }
+    }
+
+    /* ===== Header / Hero ===== */
+    header {
+      padding: 4rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    header h1 {
+      font-size: clamp(2.5rem, 7vw, 3.8rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+    header p { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: auto; }
+
+    /* Controls */
+    .controls {
+      margin-top: 2rem;
+      display: inline-flex;
+      gap: 0.75rem;
+      backdrop-filter: blur(var(--surface-blur));
+      background: var(--surface);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+    select, button {
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    select:focus, button:focus { outline: none; }
+
+    /* ====== Main Layout ====== */
+    main { max-width: 1200px; margin: auto; padding: 0 1.5rem 5rem; }
+    
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        color: var(--text);
+    }
+
+    /* === About Me Section === */
+    .about-me {
+        max-width: 750px;
+        margin: 2rem auto 5rem;
+        padding: 2rem;
+        text-align: center;
+        background: var(--surface);
+        backdrop-filter: blur(var(--surface-blur));
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+    }
+    .about-me p {
+        font-size: 1.1rem;
+        color: var(--muted);
+    }
+
+    /* === Elegant component cards === */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+    .component {
+      position: relative;
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: var(--surface);
+      backdrop-filter: blur(var(--surface-blur));
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+    .component:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .component h3 { font-size: 1.4rem; margin-bottom: 1rem; position: relative; }
+    .component h3::after{
+      content:""; position:absolute; left:0; bottom:-6px; width:40px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px;
+    }
+    .component ul { list-style: none; padding-left: 0; margin-top: 1.5rem; }
+    .component li { margin-bottom: 0.6rem; font-size: 1.05rem; }
+
+    /* ====== Timeline ====== */
+    .timeline {
+      margin-top: 5rem;
+      position: relative;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-2) 100%);
+      border-radius: 2px;
+    }
+    .timeline-entry {
+      margin-bottom: 2.8rem;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .timeline-entry::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.3rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+    }
+    .timeline-entry h4 { font-size: 1.15rem; font-weight: 600; }
+    .timeline-entry span { font-size: 0.9rem; color: var(--muted); }
+
+    /* ===== Links Section ===== */
+    .links {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .links h2 {
+        margin-bottom: 2rem;
+    }
+    .links a {
+      display: inline-block;
+      margin: 0 0.8rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .links a:hover { transform: translateY(-4px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+
+    /* ===== Footer ===== */
+    footer { text-align: center; font-size: 0.9rem; color: var(--muted); padding: 4rem 1.5rem 2rem; }
+
+    /* ===== Scroll Animations ===== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Responsive ===== */
+    @media (min-width: 768px) {
+      .controls { position: absolute; top: 2rem; right: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
+  <header>
+    <h1 data-key="name">Andrés Felipe Rosero</h1>
+    <p data-key="title">AI Specialist • Data Scientist • Environmental Engineer</p>
+
+    <div class="controls">
+      <select id="langSelect" aria-label="Select language">
+        <option value="en">EN</option>
+        <option value="fr">FR</option>
+        <option value="es">ES</option>
+      </select>
+      <button id="themeToggle" aria-label="Toggle theme">🌗</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-me reveal">
+        <p data-key="aboutMeText">
+            I am a passionate AI Specialist and Python developer with over six years of experience crafting machine learning solutions that tackle fraud, optimize operations, and drive industrial automation. My journey is about transforming complex data into impactful, real-world solutions.
+        </p>
+    </section>
+
+    <h2 class="section-title reveal" data-key="expertiseTitle">My Expertise</h2>
+    <section class="component-grid">
+      <div class="component reveal">
+        <h3 data-key="compML">Machine Learning & AI</h3>
+        <ul>
+          <li data-key="compML1">Fraud prevention models</li>
+          <li data-key="compML2">Computer vision pipelines</li>
+          <li data-key="compML3">NLP & Graph-based analytics</li>
+        </ul>
+      </div>
+      <div class="component reveal">
+        <h3 data-key="compArch">Data & Software Architecture</h3>
+        <ul>
+          <li data-key="compArch1">Cloud-native micro-services (GCP)</li>
+          <li data-key="compArch2">Scalable ETL/ELT pipelines</li>
+          <li data-key="compArch3">API design & automation</li>
+        </ul>
+      </div>
+      <div class="component reveal">
+        <h3 data-key="compSolutions">Applied Industry Solutions</h3>
+        <ul>
+          <li data-key="compSolutions1">Industrial process optimisation</li>
+          <li data-key="compSolutions2">Automated recycling systems</li>
+          <li data-key="compSolutions3">Environmental data modeling</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="timeline reveal">
+      <h2 class="section-title" data-key="journeyTitle" style="margin-top: 6rem;">My Journey</h2>
+      <div class="timeline-entry">
+        <h4 data-key="expUpdataTitle">Updata – AI Specialist</h4>
+        <span data-key="expUpdataDate">Jun 2024 – Present · Victoriaville, QC</span>
+      </div>
+      <div class="timeline-entry">
+        <h4 data-key="expMLEng">Updata – Machine Learning Engineer</h4>
+        <span data-key="expMLEngDate">Mar 2023 – Jun 2024</span>
+      </div>
+      <div class="timeline-entry">
+        <h4 data-key="expDLocal">dLocal – Senior Data Scientist</h4>
+        <span data-key="expDLocalDate">Aug 2022 – Apr 2023</span>
+      </div>
+      <div class="timeline-entry">
+        <h4 data-key="expMercado">Mercado Libre – Data Scientist</h4>
+        <span data-key="expMercadoDate">Jul 2021 – Aug 2022</span>
+      </div>
+      <div class="timeline-entry">
+        <h4 data-key="expKiwibot">Kiwibot – Head of Data & Software</h4>
+        <span data-key="expKiwibotDate">Jun 2020 – Feb 2021</span>
+      </div>
+    </section>
+
+    <div class="links reveal">
+        <h2 class="section-title" data-key="connectTitle">Let's Connect</h2>
+      <a href="https://www.linkedin.com/in/afroserom" target="_blank" rel="noopener" data-key="linkLinkedIn">LinkedIn</a>
+      <a href="https://github.com/afroserom" target="_blank" rel="noopener" data-key="linkGitHub">GitHub</a>
+    </div>
+  </main>
+
+  <footer data-key="footer">© 2025 Andrés Rosero • Crafted with passion</footer>
+
+<script>
+  // Immediately invoked function to set theme and language from localStorage
+  // to avoid page flash
+  (function() {
+    // --- THEME ---
+    // 1. Check localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      // 2. Check OS preference if no theme is saved
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      // Default to dark unless OS preference is light
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+  })();
+
+  /* =====================
+     Internationalisation
+     ===================== */
+  const translations = {
+    en: {
+      name: 'Andrés Felipe Rosero', title: 'AI Specialist • Data Scientist • Environmental Engineer',
+      aboutMeText: 'I am a passionate AI Specialist and Python developer with over six years of experience crafting machine learning solutions that tackle fraud, optimize operations, and drive industrial automation. My journey is about transforming complex data into impactful, real-world solutions.',
+      expertiseTitle: 'My Expertise',
+      compML: 'Machine Learning & AI', compML1: 'Fraud prevention models', compML2: 'Computer vision pipelines', compML3: 'NLP & Graph-based analytics',
+      compArch: 'Data & Software Architecture', compArch1: 'Cloud-native micro-services (GCP)', compArch2: 'Scalable ETL/ELT pipelines', compArch3: 'API design & automation',
+      compSolutions: 'Applied Industry Solutions', compSolutions1: 'Industrial process optimisation', compSolutions2: 'Automated recycling systems', compSolutions3: 'Environmental data modeling',
+      journeyTitle: 'My Journey', expUpdataTitle: 'Updata – AI Specialist', expUpdataDate: 'Jun 2024 – Present · Victoriaville, QC', expMLEng: 'Updata – Machine Learning Engineer', expMLEngDate: 'Mar 2023 – Jun 2024', expDLocal: 'dLocal – Senior Data Scientist', expDLocalDate: 'Aug 2022 – Apr 2023', expMercado: 'Mercado Libre – Data Scientist', expMercadoDate: 'Jul 2021 – Aug 2022', expKiwibot: 'Kiwibot – Head of Data & Software', expKiwibotDate: 'Jun 2020 – Feb 2021',
+      connectTitle: "Let's Connect", linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      footer: '© 2025 Andrés Rosero • Crafted with passion'
+    },
+    fr: {
+      name: 'Andrés Felipe Rosero', title: 'Spécialiste IA • Data Scientist • Ingénieur Environnement',
+      aboutMeText: "Je suis un spécialiste IA et développeur Python passionné avec plus de six ans d'expérience dans la création de solutions de machine learning qui luttent contre la fraude, optimisent les opérations et automatisent les processus industriels. Mon parcours consiste à transformer des données complexes en solutions percutantes et concrètes.",
+      expertiseTitle: 'Mon Expertise',
+      compML: 'Apprentissage Machine & IA', compML1: 'Modèles de prévention de la fraude', compML2: 'Pipelines de vision par ordinateur', compML3: 'NLP & analyses basées sur les graphes',
+      compArch: 'Architecture Données & Logiciels', compArch1: 'Micro-services cloud-natifs (GCP)', compArch2: 'Pipelines ETL/ELT évolutifs', compArch3: "Conception d'API & automatisation",
+      compSolutions: 'Solutions Industrielles Appliquées', compSolutions1: "Optimisation des processus industriels", compSolutions2: 'Systèmes de recyclage automatisés', compSolutions3: 'Modélisation des données environnementales',
+      journeyTitle: 'Mon Parcours', expUpdataTitle:'Updata – Spécialiste IA', expUpdataDate:'Juin 2024 – Aujourd’hui · Victoriaville, QC', expMLEng:'Updata – Ingénieur ML', expMLEngDate:'Mar 2023 – Juin 2024', expDLocal:'dLocal – Data Scientist Senior', expDLocalDate:'Août 2022 – Avr 2023', expMercado:'Mercado Libre – Data Scientist', expMercadoDate:'Juil 2021 – Août 2022', expKiwibot:'Kiwibot – Chef de Données & Logiciels', expKiwibotDate:'Juin 2020 – Fév 2021',
+      connectTitle: 'Restons Connectés', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      footer: '© 2025 Andrés Rosero • Créé avec passion'
+    },
+    es: {
+      name:'Andrés Felipe Rosero', title:'Especialista en IA • Científico de Datos • Ingeniero Ambiental',
+      aboutMeText:'Soy un apasionado especialista en IA y desarrollador Python con más de seis años de experiencia creando soluciones de machine learning que combaten el fraude, optimizan operaciones e impulsan la automatización industrial. Mi trayectoria se trata de transformar datos complejos en soluciones impactantes del mundo real.',
+      expertiseTitle:'Mi Pericia',
+      compML: 'Aprendizaje Automático e IA', compML1: 'Modelos de prevención de fraude', compML2: 'Pipelines de visión por computador', compML3: 'NLP y análisis basados en grafos',
+      compArch: 'Arquitectura de Datos y Software', compArch1: 'Microservicios nativos en la nube (GCP)', compArch2: 'Pipelines ETL/ELT escalables', compArch3: 'Diseño de API y automatización',
+      compSolutions: 'Soluciones Industriales Aplicadas', compSolutions1: 'Optimización de procesos industriales', compSolutions2: 'Sistemas de reciclaje automatizados', compSolutions3: 'Modelado de datos ambientales',
+      journeyTitle:'Mi Trayectoria', expUpdataTitle:'Updata – Especialista en IA', expUpdataDate:'Jun 2024 – Presente · Victoriaville, QC', expMLEng:'Updata – Ingeniero de ML', expMLEngDate:'Mar 2023 – Jun 2024', expDLocal:'dLocal – Científico de Datos Senior', expDLocalDate:'Ago 2022 – Abr 2023', expMercado:'Mercado Libre – Científico de Datos', expMercadoDate:'Jul 2021 – Ago 2022', expKiwibot:'Kiwibot – Jefe de Datos y Software', expKiwibotDate:'Jun 2020 – Feb 2021',
+      connectTitle:'Conectemos', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      footer:'© 2025 Andrés Rosero • Hecho con pasión'
+    }
+  };
+
+  const langSelect = document.getElementById('langSelect');
+  const themeToggle = document.getElementById('themeToggle');
+
+  function setLang(lang){
+    document.documentElement.lang = lang;
+    langSelect.value = lang; // Sync dropdown with current language
+    const dict = translations[lang] || translations.en;
+    document.querySelectorAll('[data-key]').forEach(el => {
+      const key = el.getAttribute('data-key');
+      if(dict[key]) el.textContent = dict[key];
+    });
+  }
+  
+  // Set language from localStorage or default
+  const savedLang = localStorage.getItem('language') || 'en';
+  setLang(savedLang);
+
+  langSelect.addEventListener('change', e => {
+    const newLang = e.target.value;
+    setLang(newLang);
+    localStorage.setItem('language', newLang); // Save language choice
+  });
+
+  /* ===== Theme Toggle ===== */
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme); // Save theme choice
+  });
+
+  /* ===== Scroll Reveal ===== */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
