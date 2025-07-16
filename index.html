@@ -210,6 +210,48 @@
     .timeline-entry h4 { font-size: 1.15rem; font-weight: 600; }
     .timeline-entry span { font-size: 0.9rem; color: var(--muted); }
 
+    /* ===== Education Section ===== */
+    .education-section {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .education-card {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      background: var(--surface);
+      backdrop-filter: blur(var(--surface-blur));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .education-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .education-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    .education-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .education-card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .education-card span {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
     /* ===== Links Section ===== */
     .links {
       margin-top: 5rem;
@@ -303,6 +345,16 @@
       </div>
     </section>
 
+    <section class="education-section reveal">
+        <h2 class="section-title" data-key="educationTitle">Education</h2>
+        <div class="education-card">
+            <div class="education-icon">🎓</div>
+            <h3 data-key="eduUniandes">Universidad de Los Andes, Colombia</h3>
+            <p data-key="eduUniandesDegree">Bachelor of Science - BS, Environmental Engineering</p>
+            <span data-key="eduUniandesDate">2014 – 2018</span>
+        </div>
+    </section>
+
     <div class="links reveal">
         <h2 class="section-title" data-key="connectTitle">Let's Connect</h2>
       <a href="https://www.linkedin.com/in/afroserom" target="_blank" rel="noopener" data-key="linkLinkedIn">LinkedIn</a>
@@ -339,6 +391,10 @@
       expMercado: 'Mercado Libre – Data Scientist', expMercadoDate: 'Jul 2021 – Aug 2022', 
       expKiwibotHead: 'Kiwibot – Head of Data & Software', expKiwibotHeadDate: 'Jun 2020 – Apr 2021',
       expKiwibotDS: 'Kiwibot – Data Scientist', expKiwibotDSDate: 'Jun 2019 – May 2020',
+      educationTitle: 'Education',
+      eduUniandes: 'Universidad de Los Andes, Colombia',
+      eduUniandesDegree: 'Bachelor of Science - BSc, Environmental Engineering',
+      eduUniandesDate: '2014 – 2018',
       connectTitle: "Let's Connect", linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Crafted with passion`
     },
@@ -352,6 +408,10 @@
       expMercado:'Mercado Libre – Data Scientist', expMercadoDate:'Juil 2021 – Août 2022', 
       expKiwibotHead:'Kiwibot – Chef de Données & Logiciels', expKiwibotHeadDate:'Juin 2020 – Avr 2021',
       expKiwibotDS:'Kiwibot – Data Scientist', expKiwibotDSDate:'Juin 2019 – Mai 2020',
+      educationTitle: 'Formation',
+      eduUniandes: 'Universidad de Los Andes, Colombie',
+      eduUniandesDegree: "Baccalauréat en sciences - BSc, Génie de l'environnement",
+      eduUniandesDate: '2014 – 2018',
       connectTitle: 'Restons Connectés', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Créé avec passion`
     },
@@ -365,6 +425,10 @@
       expMercado:'Mercado Libre – Científico de Datos', expMercadoDate:'Jul 2021 – Ago 2022', 
       expKiwibotHead:'Kiwibot – Jefe de Datos y Software', expKiwibotHeadDate:'Jun 2020 – Abr 2021',
       expKiwibotDS:'Kiwibot – Científico de Datos', expKiwibotDSDate:'Jun 2019 – May 2020',
+      educationTitle: 'Educación',
+      eduUniandes: 'Universidad de Los Andes, Colombia',
+      eduUniandesDegree: 'Bachelor of Science - BSc, Ingeniería Ambiental',
+      eduUniandesDate: '2014 – 2018',
       connectTitle:'Conectemos', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Hecho con pasión`
     }
