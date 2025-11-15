@@ -1,0 +1,279 @@
+/* ============================
+       Design Tokens (Light & Dark)
+       ============================ */
+    :root {
+      --bg: #f8f9fa;
+      --surface: rgba(255, 255, 255, 0.1);
+      --surface-blur: 12px;
+      --text: #212529;
+      --muted: #6c757d;
+      --accent: #007bff;
+      --accent-2: #66b0ff;
+      --radius: 20px;
+      --shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      --border-color: rgba(0, 0, 0, 0.05);
+    }
+    [data-theme="dark"] {
+      --bg: #0e1116;
+      --surface: rgba(30, 33, 39, 0.1);
+      --text: #f1f3f7;
+      --muted: #a1a1aa;
+      --accent: #5ac8ff;
+      --accent-2: #1e90ff;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* ========= Global ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow-x: hidden;
+    }
+
+    /* ==== Abstract blobs for depth ==== */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.5;
+      z-index: -1;
+      animation: blobMove 50s ease-in-out infinite alternate;
+    }
+    .blob.one { width: 40vw; height: 40vw; background: var(--accent); top: -15%; left: -15%; }
+    .blob.two { width: 30vw; height: 30vw; background: var(--accent-2); bottom: -20%; right: -15%; animation-delay: 5s; }
+    @keyframes blobMove {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30%, -20%) scale(1.3); }
+    }
+
+    /* ===== Header / Hero ===== */
+    header {
+      padding: 4rem 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    header h1 {
+      font-size: clamp(2.5rem, 7vw, 3.8rem);
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+    header p { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin: auto; }
+    
+    /* Utility class to hide elements */
+    .hidden {
+        display: none;
+    }
+
+    /* Controls */
+    .controls {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      display: inline-flex;
+      gap: 0.75rem;
+      backdrop-filter: blur(var(--surface-blur));
+      background: var(--surface);
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+    select, button {
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    select:focus, button:focus { outline: none; }
+
+    /* ====== Main Layout ====== */
+    main { max-width: 1200px; margin: auto; padding: 0 1.5rem 5rem; }
+    
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 3rem;
+        color: var(--text);
+    }
+
+    /* ====== Header Lottie Animation ====== */
+    lottie-player {
+        display: block;
+        height: 13rem; 
+        margin-bottom: -5rem; 
+        margin-top: -6rem;
+    }
+
+    /* === About Me Section === */
+    .about-me {
+        max-width: 750px;
+        margin: 2rem auto 5rem;
+        padding: 2.5rem;
+        text-align: center;
+        background: var(--surface);
+        backdrop-filter: blur(var(--surface-blur));
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+    }
+    .about-me p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: var(--muted);
+    }
+
+    /* === Elegant component cards === */
+    .component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3.5rem;
+      position: relative;
+    }
+    .component {
+      position: relative;
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: var(--surface);
+      backdrop-filter: blur(var(--surface-blur));
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      overflow: hidden;
+    }
+    .component:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .component h3 { font-size: 1.4rem; margin-bottom: 1rem; position: relative; }
+    .component h3::after{
+      content:""; position:absolute; left:0; bottom:-6px; width:40px; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent-2)); border-radius:3px;
+    }
+    .component ul { list-style: none; padding-left: 0; margin-top: 1.5rem; }
+    .component li { margin-bottom: 0.6rem; font-size: 1.05rem; }
+
+    /* ====== Timeline ====== */
+    .timeline {
+      margin-top: 5rem;
+      position: relative;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 10px;
+      bottom: 10px;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--accent-2) 100%);
+      border-radius: 2px;
+    }
+    .timeline-entry {
+      margin-bottom: 2.8rem;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    .timeline-entry::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.3rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--accent);
+    }
+    .timeline-entry h4 { font-size: 1.15rem; font-weight: 600; }
+    .timeline-entry span { font-size: 0.9rem; color: var(--muted); }
+
+    /* ===== Projects Section ===== */
+    .projects-section {
+      margin-top: 5rem;
+    }
+
+    /* ===== Education Section ===== */
+    .education-section {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .education-card {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2.5rem;
+      background: var(--surface);
+      backdrop-filter: blur(var(--surface-blur));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .education-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .education-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    .education-card h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .education-card p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .education-card span {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* ===== Links Section ===== */
+    .links {
+      margin-top: 5rem;
+      text-align: center;
+    }
+    .links h2 {
+        margin-bottom: 2rem;
+    }
+    .links a {
+      display: inline-block;
+      margin: 0 0.8rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color: #fff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .links a:hover { transform: translateY(-4px); box-shadow: 0 8px 15px rgba(0,0,0,0.15); }
+
+    /* ===== Footer ===== */
+    footer { text-align: center; font-size: 0.9rem; color: var(--muted); padding: 4rem 1.5rem 2rem; }
+
+    /* ===== Scroll Animations ===== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== Responsive ===== */
+    @media (min-width: 768px) {
+      .controls { position: absolute; top: 2rem; right: 2rem; }
+    }
