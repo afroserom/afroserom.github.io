@@ -75,6 +75,19 @@
     const langSelect = document.getElementById('langSelect');
     const themeToggle = document.getElementById('themeToggle');
 
+    function handleScrollAnimations() {
+      const revealEls = document.querySelectorAll('.reveal');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealEls.forEach(el => io.observe(el));
+    }
+
     function setLang(lang){
       document.documentElement.lang = lang;
       langSelect.value = lang; 
@@ -107,18 +120,10 @@
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('theme', newTheme);
+      handleScrollAnimations(); // Re-trigger animations
     });
 
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    revealEls.forEach(el => io.observe(el));
+    handleScrollAnimations(); // Initial call
 
     /* ===== Lottie Animation Logic ===== */
     const lottiePlayer = document.getElementById('lottie-intro');

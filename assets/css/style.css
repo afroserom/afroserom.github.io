@@ -149,6 +149,7 @@
       border: 1px solid var(--border-color);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       overflow: hidden;
+      backface-visibility: hidden;
     }
     .component:hover {
       transform: translateY(-8px);
@@ -183,6 +184,7 @@
       margin-bottom: 2.8rem;
       position: relative;
       padding-left: 2.5rem;
+      backface-visibility: hidden;
     }
     .timeline-entry::before {
       content: "";
@@ -218,6 +220,7 @@
       box-shadow: var(--shadow);
       border: 1px solid var(--border-color);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
+      backface-visibility: hidden;
     }
     .education-card:hover {
       transform: translateY(-8px);
@@ -270,7 +273,7 @@
     footer { text-align: center; font-size: 0.9rem; color: var(--muted); padding: 4rem 1.5rem 2rem; }
 
     /* ===== Scroll Animations ===== */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; will-change: transform, opacity; backface-visibility: hidden; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ===== Responsive ===== */
