@@ -74,6 +74,25 @@
   document.addEventListener('DOMContentLoaded', () => {
     const langSelect = document.getElementById('langSelect');
     const themeToggle = document.getElementById('themeToggle');
+    const lottiePlayer = document.getElementById('lottie-intro');
+
+    function loadLottieAnimation(lang) {
+      const animations = {
+        fr: 'assets/salut.json',
+        es: 'assets/hola.json',
+        en: 'assets/hello.json'
+      };
+      const animationFile = animations[lang] || animations.en;
+      fetch(animationFile)
+        .then(response => response.json())
+        .then(data => {
+          lottiePlayer.load(data);
+          lottiePlayer.play(); // Rerun animation
+        })
+        .catch(error => {
+          console.error('Error loading Lottie animation:', error);
+        });
+    }
 
     function handleScrollAnimations() {
       const revealEls = document.querySelectorAll('.reveal');
@@ -104,6 +123,7 @@
             }
         }
       });
+      loadLottieAnimation(lang);
     }
     
     const savedLang = localStorage.getItem('language') || 'en';
@@ -125,17 +145,4 @@
 
     handleScrollAnimations(); // Initial call
 
-    /* ===== Lottie Animation Logic ===== */
-    const lottiePlayer = document.getElementById('lottie-intro');
-
-    fetch('assets/hello.json')
-      .then(response => response.json())
-      .then(data => {
-        lottiePlayer.load(data);
-        lottiePlayer.play();
-      })
-      .catch(error => {
-        console.error('Error loading Lottie animation:', error);
-        lottiePlayer.classList.add('hidden');
-      });
   });
