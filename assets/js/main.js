@@ -29,7 +29,7 @@
       eduUniandes: 'Universidad de Los Andes, Colombia',
       eduUniandesDegree: 'Bachelor of Science - BSc, Environmental Engineering',
       eduUniandesDate: '2014 – 2018',
-      connectTitle: "Let's Connect", linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      connectTitle: "Let's Connect",
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Crafted with passion`
     },
     fr: {
@@ -47,7 +47,7 @@
       eduUniandes: 'Universidad de Los Andes, Colombie',
       eduUniandesDegree: "Baccalauréat en sciences - BSc, Génie de l\'environnement",
       eduUniandesDate: '2014 – 2018',
-      connectTitle: 'Restons Connectés', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      connectTitle: 'Restons Connectés',
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Créé avec passion`
     },
     es: {
@@ -65,7 +65,7 @@
       eduUniandes: 'Universidad de Los Andes, Colombia',
       eduUniandesDegree: 'Bachelor of Science - BSc, Ingeniería Ambiental',
       eduUniandesDate: '2014 – 2018',
-      connectTitle:'Conectemos', linkLinkedIn:'LinkedIn', linkGitHub:'GitHub',
+      connectTitle:'Conectemos',
       footer: `© ${new Date().getFullYear()} Andrés Rosero • Hecho con pasión`
     }
   };
