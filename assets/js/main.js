@@ -16,7 +16,8 @@
   const translations = {
     en: {
       name: 'Andrés Felipe Rosero', title: 'Technical Lead • Data Scientist • Environmental Engineering Graduate (Colombia)',
-      aboutMeText: "My passion lies at the intersection of AI and engineering, where complex challenges become opportunities for innovation. For over six years, I've focused on building robust AI solutions—from intelligent systems that prevent fraud and automate industrial recycling, to data architectures that deliver real-time insights on the cloud. This space is a glimpse into that journey.",
+      resumeCta: 'View Résumé on LinkedIn',
+      aboutMeText: "My passion lies at the intersection of AI and engineering, where complex challenges become opportunities for innovation. Since 2019, I've focused on building robust AI solutions—from intelligent systems that prevent fraud and automate industrial recycling, to data architectures that deliver real-time insights on the cloud. This space is a glimpse into that journey.",
       journeyTitle: 'My Journey', 
       companyUpdata: 'Updata', companyDLocal: 'dLocal', companyMercado: 'Mercado Libre', companyKiwibot: 'Kiwibot (now Robot.com)',
       expUpdataLeadTitle: 'Technical Lead', expUpdataLeadDate: 'Jan 2026 – Present · Victoriaville, QC',
@@ -37,7 +38,8 @@
     },
     fr: {
       name: 'Andrés Felipe Rosero', title: 'Responsable Technique • Data Scientist • Diplômé en Génie de l\'Environnement (Colombie)',
-      aboutMeText: "Ma passion se situe à l'intersection de l'IA et de l'ingénierie, où les défis complexes deviennent des opportunités d'innovation. Depuis plus de six ans, je me concentre sur la création de solutions d'IA robustes—des systèmes intelligents qui préviennent la fraude et automatisent le recyclage industriel, aux architectures de données qui fournissent des informations en temps réel sur le cloud. Cet espace est un aperçu de ce parcours.",
+      resumeCta: 'Voir mon CV sur LinkedIn',
+      aboutMeText: "Ma passion se situe à l'intersection de l'IA et de l'ingénierie, où les défis complexes deviennent des opportunités d'innovation. Depuis 2019, je me concentre sur la création de solutions d'IA robustes—des systèmes intelligents qui préviennent la fraude et automatisent le recyclage industriel, aux architectures de données qui fournissent des informations en temps réel sur le cloud. Cet espace est un aperçu de ce parcours.",
       journeyTitle: 'Mon Parcours', 
       companyUpdata: 'Updata', companyDLocal: 'dLocal', companyMercado: 'Mercado Libre', companyKiwibot: 'Kiwibot (aujourd\'hui Robot.com)',
       expUpdataLeadTitle:'Responsable Technique', expUpdataLeadDate:'Janv 2026 – Aujourd\'hui · Victoriaville, QC',
@@ -58,7 +60,8 @@
     },
     es: {
       name:'Andrés Felipe Rosero', title:'Líder Técnico • Científico de Datos • Graduado en Ingeniería Ambiental (Colombia)',
-      aboutMeText:'Mi pasión reside en la intersección de la IA y la ingeniería, donde los desafíos complejos se convierten en oportunidades para la innovación. Durante más de seis años, me he centrado en construir soluciones de IA robustas, desde sistemas inteligentes que previenen el fraude y automatizan el reciclaje industrial, hasta arquitecturas de datos que ofrecen información en tiempo real en la nube. Este espacio es un vistazo a esa trayectoria.',
+      resumeCta: 'Ver mi CV en LinkedIn',
+      aboutMeText:'Mi pasión reside en la intersección de la IA y la ingeniería, donde los desafíos complejos se convierten en oportunidades para la innovación. Desde 2019, me he centrado en construir soluciones de IA robustas, desde sistemas inteligentes que previenen el fraude y automatizan el reciclaje industrial, hasta arquitecturas de datos que ofrecen información en tiempo real en la nube. Este espacio es un vistazo a esa trayectoria.',
       journeyTitle:'Mi Trayectoria', 
       companyUpdata: 'Updata', companyDLocal: 'dLocal', companyMercado: 'Mercado Libre', companyKiwibot: 'Kiwibot (ahora Robot.com)',
       expUpdataLeadTitle:'Líder Técnico', expUpdataLeadDate:'Ene 2026 – Presente · Victoriaville, QC',
